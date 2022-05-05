@@ -96,23 +96,26 @@ button.onclick = function () {
     xhrRequest.send()
 }
 
-
+//to check if it is possible to put the no. in that index
 function isPossible(board, sr, sc, val) {
+    //checking for row
     for (var row = 0; row < 9; row++) {
         if (board[row][sc] == val) {
             return false;
         }
     }
-
+//checking for column
     for (var col = 0; col < 9; col++) {
         if (board[sr][col] == val) {
             return false;
         }
     }
 
+    //formula to get the starting index of row and column of the subgrid
     var r = sr - sr % 3;
     var c = sc - sc % 3;
 
+    //checking for subgrid
     for (var cr = r; cr < r + 3; cr++) {
         for (var cc = c; cc < c + 3; cc++) {
             if (board[cr][cc] == val) {
@@ -120,6 +123,7 @@ function isPossible(board, sr, sc, val) {
             }
         }
     }
+    //if possible then return true
     return true;
 
 }
@@ -130,19 +134,22 @@ function solveSudokuHelper(board, sr, sc) {
         changeBoard(board);
         return;
     }
+    //if we reach the end of column then go to the starting column innext row
     if (sc == 9) {
         solveSudokuHelper(board, sr + 1, 0)
         return;
     }
-
+//if the index is already filled ,we skip it
     if (board[sr][sc] != 0) {
         solveSudokuHelper(board, sr, sc + 1);
         return;
     }
-
+//if index is not filled we try to fill a value
     for (var i = 1; i <= 9; i++) {
+        //check if it is possible to fill a value
         if (isPossible(board, sr, sc, i)) {
             board[sr][sc] = i;
+            //go to next index after filling
             solveSudokuHelper(board, sr, sc + 1);
             board[sr][sc] = 0;
         }
