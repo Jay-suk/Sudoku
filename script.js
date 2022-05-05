@@ -91,6 +91,7 @@ button.onclick = function () {
         setColor(temp)
         changeBoard(board)
     }
+    //using API to get the initial sudoku setup
     xhrRequest.open('get', 'https://sugoku.herokuapp.com/board?difficulty=easy')
     //we can change the difficulty of the puzzle the allowed values of difficulty are easy, medium, hard and random
     xhrRequest.send()
